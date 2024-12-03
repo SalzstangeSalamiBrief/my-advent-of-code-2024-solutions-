@@ -21,11 +21,20 @@ const (
 
 func main() {
 	puzzleMap := getPuzzleMap(fileName)
+	//PartOne(puzzleMap)
+	PartTwo(puzzleMap)
+
+}
+
+func PartOne(puzzleMap [][]int) {
 	saveEntries := filterReportsBySafety(puzzleMap, true, false)
 	numberOfSaveEntries := len(saveEntries)
 	fmt.Printf("Part One: %v\n", numberOfSaveEntries)
-	saveEntries = filterReportsBySafety(puzzleMap, true, true)
-	numberOfSaveEntries = len(saveEntries)
+}
+
+func PartTwo(puzzleMap [][]int) {
+	saveEntries := filterReportsBySafety(puzzleMap, true, true)
+	numberOfSaveEntries := len(saveEntries)
 	fmt.Printf("Part Two: %v", numberOfSaveEntries)
 }
 
@@ -59,10 +68,14 @@ func getPuzzleMap(fileName string) [][]int {
 func filterReportsBySafety(reportsMap [][]int, shouldSave bool, shouldUseToleranceLevel bool) [][]int {
 	var saveEntries [][]int
 
-	for _, entry := range reportsMap {
-		isEntrySave := checkIfReportsAreSave(entry, shouldUseToleranceLevel)
+	for _, reports := range reportsMap {
+		isEntrySave := checkIfReportsAreSave(reports, shouldUseToleranceLevel)
+		//if !isEntrySave {
+		fmt.Printf("%v: %v\n", isEntrySave, reports)
+
+		//}
 		if isEntrySave == shouldSave {
-			saveEntries = append(saveEntries, entry)
+			saveEntries = append(saveEntries, reports)
 		}
 	}
 
@@ -76,41 +89,36 @@ func checkIfReportsAreSave(reports []int, shouldUseToleranceLevel bool) bool {
 
 	expectedDirection := UNKNOWN
 	hasIgnoredPreviousBadLevel := shouldUseToleranceLevel == false
-	isSave := true
-	i := 0
+	currentReports := reports
 
-	for i < len(reports)-1 {
-		currentDirection := getDirectionOfReport(reports[i], reports[i+1])
-		if expectedDirection == UNKNOWN {
+	for i := 0; i < len(currentReports)-1; i += 1 {
+		firstItem := currentReports[i]
+		secondItem := currentReports[i+1]
+		currentDirection := getDirectionOfReport(firstItem, secondItem)
+		if i == 0 {
 			expectedDirection = currentDirection
 		}
 
 		isSameDirection := currentDirection == expectedDirection
-		areReportsInRange := areReportInRange(reports[i], reports[i+1])
-		isSave = isSave && isSameDirection && areReportsInRange
+		areReportsInRange := areReportInRange(firstItem, secondItem)
+		if isSameDirection && areReportsInRange {
+			continue
+		}
 
-		if !isSave {
-			if shouldUseToleranceLevel {
-				if hasIgnoredPreviousBadLevel {
-					return false
-				}
-
-				reports = append(reports[:i], reports[i+1:]...)
-				hasIgnoredPreviousBadLevel = true
-				isSave = true
-				if i > 0 {
-					i -= 1
-				}
-				continue
-			}
-
+		if !shouldUseToleranceLevel {
 			return false
 		}
 
-		i += 1
+		if hasIgnoredPreviousBadLevel {
+			return false
+		}
+
+		hasIgnoredPreviousBadLevel = true
+		currentReports = append(currentReports[:i+1], currentReports[i+2:]...)
+		i -= 1
 	}
 
-	return isSave
+	return true
 }
 
 func getDirectionOfReport(a int, b int) Direction {
@@ -131,7 +139,7 @@ func areReportInRange(a int, b int) bool {
 		diff *= -1
 	}
 
-	if 0 <= diff && diff <= 3 {
+	if 1 <= diff && diff <= 3 {
 		return true
 	}
 
