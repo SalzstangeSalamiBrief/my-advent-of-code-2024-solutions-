@@ -11,8 +11,8 @@ var wordParts []string = []string{"X", "M", "A", "S"}
 var horizontalJoinedWord = strings.Join(wordParts, "")
 
 func main() {
-	puzzleCharacterLines := fileReader.GetFileContentAsTwoDCharacterArray(fileName)
-	indexesOfStartingCharacterX := getIndexesOfStartingCharacterX(puzzleLines)
+	multidimensionalCharacterArrayInput := fileReader.GetFileContentAsMultidimensionalCharacterArray(fileName)
+	indexesOfStartingCharacterX := getIndexesOfStartingCharacterX(multidimensionalCharacterArrayInput)
 }
 
 func getIndexesOfStartingCharacterX(lines [][]string) [][2]int {
