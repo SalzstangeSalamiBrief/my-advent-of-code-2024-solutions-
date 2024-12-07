@@ -26,7 +26,7 @@ func GetFileContentLines(fileName string) []string {
 	return lineEndRegExp.Split(fileContent, -1)
 }
 
-func GetFileContentAsTwoDCharacterArray(fileName string) [][]string {
+func GetFileContentAsMultidimensionalCharacterArray(fileName string) [][]string {
 	fileContent := GetFileContentAsString(fileName)
 	lineEndRegExp := regexp.MustCompile(`\r\n`)
 	lines := lineEndRegExp.Split(fileContent, -1)
