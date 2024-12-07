@@ -4,6 +4,7 @@ import (
 	"log"
 	"os"
 	"regexp"
+	"strings"
 )
 
 func GetFileContentAsString(fileName string) string {
@@ -23,4 +24,18 @@ func GetFileContentLines(fileName string) []string {
 	fileContent := GetFileContentAsString(fileName)
 	lineEndRegExp := regexp.MustCompile(`\r\n`)
 	return lineEndRegExp.Split(fileContent, -1)
+}
+
+func GetFileContentAsTwoDCharacterArray(fileName string) [][]string {
+	fileContent := GetFileContentAsString(fileName)
+	lineEndRegExp := regexp.MustCompile(`\r\n`)
+	lines := lineEndRegExp.Split(fileContent, -1)
+
+	result := make([][]string, len(lines))
+	for _, line := range lines {
+		currentCharacterLine := strings.Split(line, "")
+		result = append(result, currentCharacterLine)
+	}
+
+	return result
 }
