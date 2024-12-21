@@ -9,7 +9,7 @@ import (
 	"strings"
 )
 
-const fileName string = "exampleInput.txt"
+const fileName string = "input.txt"
 
 var wordParts []string = []string{"X", "M", "A", "S"}
 
@@ -189,19 +189,19 @@ func getIsDiagonalToBottomRightMatching(puzzleInput [][]string, row int, col int
 }
 
 func getIsHorizontalLeftOutOfBound(col int) bool {
-	return col-len(wordParts) < 0
+	return col-(len(wordParts)-1) < 0
 }
 
 func getIsHorizontalRightOutOfBound(line []string, col int) bool {
-	return col+len(wordParts) > len(line)
+	return col+(len(wordParts)-1) > len(line)-1
 }
 
 func getIsVerticalBottomOutOfBound(puzzleInput [][]string, row int) bool {
-	return row+len(wordParts) > len(puzzleInput)
+	return row+(len(wordParts)-1) > len(puzzleInput)-1
 }
 
 func getIsVerticalTopOutOfBound(row int) bool {
-	return row-len(wordParts) < 0
+	return row-(len(wordParts)-1) < 0
 }
 
 func writeMatchesToMarkdownTable(puzzleInput [][]string, matches [][2]int, filename string) {
