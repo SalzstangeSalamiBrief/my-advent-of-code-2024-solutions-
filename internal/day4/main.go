@@ -51,7 +51,14 @@ func getNumberOfMatchesForStartingCharacter(puzzleInput [][]string, startingInde
 	isDiagonalToTopRightMatching := getIsDiagonalToRopRightMatching(puzzleInput, startingIndex[0], startingIndex[1])
 	isDiagonalToBottomleftMatching := getIsDiagonalToBottomLeftMatching(puzzleInput, startingIndex[0], startingIndex[1])
 	isDiagonalToBottomRightMatching := getIsDiagonalToBottomRightMatching(puzzleInput, startingIndex[0], startingIndex[1])
-	result := isHorizontalLeftMatching + isHorizontalRightMatching + isVerticalTopMatching + isVerticalBottomMatching + isDiagonalToBottomRightMatching + isDiagonalToBottomleftMatching + isDiagonalToTopLeftMatching + isDiagonalToTopRightMatching
+	result := isHorizontalLeftMatching +
+		isHorizontalRightMatching +
+		isVerticalTopMatching +
+		isVerticalBottomMatching +
+		isDiagonalToBottomRightMatching +
+		isDiagonalToBottomleftMatching +
+		isDiagonalToTopLeftMatching +
+		isDiagonalToTopRightMatching
 	if result > 0 {
 		fmt.Printf("[row, col]: '[%v, %v]'\n", startingIndex[0], startingIndex[1])
 		fmt.Printf("left '%v', right '%v', top '%v', bottom '%v'\n", isHorizontalLeftMatching, isHorizontalRightMatching, isVerticalTopMatching, isVerticalBottomMatching)
