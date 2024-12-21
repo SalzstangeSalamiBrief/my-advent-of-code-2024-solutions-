@@ -32,9 +32,9 @@ func GetFileContentAsMultidimensionalCharacterArray(fileName string) [][]string 
 	lines := lineEndRegExp.Split(fileContent, -1)
 
 	result := make([][]string, len(lines))
-	for _, line := range lines {
+	for i, line := range lines {
 		currentCharacterLine := strings.Split(line, "")
-		result = append(result, currentCharacterLine)
+		result[i] = currentCharacterLine
 	}
 
 	return result
