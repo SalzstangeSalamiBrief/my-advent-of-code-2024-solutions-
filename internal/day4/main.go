@@ -21,7 +21,7 @@ func main() {
 }
 
 func getIndexesOfStartingCharacterX(lines [][]string) [][2]int {
-	indexes := make([][2]int, len(lines))
+	indexes := make([][2]int, 0)
 	for i, line := range lines {
 		for j, character := range line {
 			if character == "X" {
@@ -35,9 +35,13 @@ func getNumberOfMatchesForStartingCharacter(puzzleInput [][]string, startingInde
 	isVerticalTopMatching := getIsVerticalTopMatching(puzzleInput, startingIndex[0], startingIndex[1])
 	isVerticalBottomMatching := getIsVerticalBottomMatching(puzzleInput, startingIndex[0], startingIndex[1])
 
-	fmt.Printf("[row, col]: '[%v, %v]'\n", startingIndex[0], startingIndex[1])
-	fmt.Printf("left '%v', right '%v', top '%v', bottom '%v'\n", isHorizontalLeftMatching, isHorizontalRightMatching, isVerticalTopMatching, isVerticalBottomMatching)
-	return isHorizontalLeftMatching + isHorizontalRightMatching+isVerticalTopMatching+isVerticalBottomMatching
+	result := isHorizontalLeftMatching + isHorizontalRightMatching+isVerticalTopMatching+isVerticalBottomMatching
+	if result > 0{
+		fmt.Printf("[row, col]: '[%v, %v]'\n", startingIndex[0], startingIndex[1])
+		fmt.Printf("left '%v', right '%v', top '%v', bottom '%v'\n", isHorizontalLeftMatching, isHorizontalRightMatching, isVerticalTopMatching, isVerticalBottomMatching)
+	}
+
+	return result
 }
 
 func getIsHorizontalRightMatching(line []string, col int) int {
@@ -99,7 +103,6 @@ func getIsVerticalTopMatching(puzzleInput [][]string, row int, col int) int{
 
 	return 1
 }
-
 
 func getIsHorizontalLeftOutOfBound(col int) bool{
 	return col - len(wordParts) <= 0
